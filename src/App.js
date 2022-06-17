@@ -7,10 +7,12 @@ class App extends Component {
 
     this.state = {
       monsters: [],
+      searchField: ""
     }
   }
 
-  componentDidMount() {
+// gets monsters from API
+componentDidMount() {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then(response => response.json())
       .then(users => this.setState(() => {
@@ -19,15 +21,23 @@ class App extends Component {
   }
 
   render() {
+    const filteredMonsters = this.state.monsters.filter(monster => {
+      return monster.name.toLocaleLowerCase().includes(this.state.searchField);
+    });
     return (
       <div className="App">
+        <input type="text" placeholder="Search Monsters" onChange={(event) => {
+            const searchField = event.target.value.toLocaleLowerCase();
+            this.setState(() => {
+              return { searchField };
+            })
+    }
+        }/>
         {
-          this.state.monsters.map((monster, index) => {
+          filteredMonsters.map((monster, index) => {
             return <h1 key={index}>{monster.name}</h1>
           })
         }
-        <input type="text" />
-        <input type="submit" />
       </div>
     );
   }

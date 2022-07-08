@@ -13,3 +13,9 @@ body {
   );
   text-align: center;
 }
+
+.app-title {
+  margin: 30px;
+  color: indigo;
+  font-size: 40px;
+}
